@@ -26,3 +26,7 @@ PresidioPY is a wrapper around requests library to interact with [Microsoft Pres
 | /api/v1/analyzer/recognizers/:id                   | POST   | NO        |
 | /api/v1/analyzer/recognizers/:id                   | PUT    | NO        |
 | /api/v1/analyzer/recognizers/:id                   | DELETE | NO        |
+
+## Development sponsor
+
+The development of this library is sponsored by [QueryLayer](https://www.querylayer.com/): The next generation of Data-Sharing.
