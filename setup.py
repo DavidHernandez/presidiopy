@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="presidiopy", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="David Hernandez",
     author_email="hello@davidhernandez.info",
     description="An API library to interact with Microsoft Presidio",
