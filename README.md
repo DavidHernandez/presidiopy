@@ -12,7 +12,7 @@ PresidioPY is a wrapper around requests library to interact with [Microsoft Pres
 
 | Path                                               | Method          | Supported |
 | -------------------------------------------------- | --------------- | --------- |
-| /api/v1/fieldTypes                                 | GET             | NO        |
+| /api/v1/fieldTypes                                 | GET             | YES       |
 | /api/v1/templates/:project/:action/:id             | GET             | NO        |
 | /api/v1/templates/:project/:action/:id             | POST            | NO        |
 | /api/v1/templates/:project/:action/:id             | PUT             | NO        |

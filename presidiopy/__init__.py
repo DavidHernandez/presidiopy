@@ -25,6 +25,10 @@ class PresidioPy():
     def recognizers_url(self):
         return self.base_url + 'analyzer/recognizers/'
 
+    @property
+    def field_types_url(self):
+        return self.base_url + 'fieldTypes'
+
     def change_project(self, project):
         self.project = project
 
@@ -45,6 +49,10 @@ class PresidioPy():
         url = self.recognizers_url
         if len(args) > 0:
             url += str(args[0])
+        return self.request('get', url)
+
+    def retrieve_field_types(self):
+        url = self.field_types_url
         return self.request('get', url)
 
     def request(self, method, url, **kwargs):

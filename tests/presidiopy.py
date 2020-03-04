@@ -29,6 +29,12 @@ def mocked_requests_recognizers(*args, **kwargs):
 
     return MockResponse([], 200)
 
+def mocked_requests_field_types(*args, **kwargs):
+    if not args[0].startswith('http://127.0.0.1:8080/api/v1/fieldTypes'):
+        return MockResponse(None, 404)
+
+    return MockResponse([], 200)
+
 def mocked_requests_error(*args, **kwargs):
     return MockResponse(None, 404)
 
@@ -89,3 +95,8 @@ class TestPresidioPy(unittest.TestCase):
     def test_can_get_recognizer(self, mock):
         api = PresidioPy(self.sample_ip, self.project)
         self.assertEqual(api.retrieve_recognizers('recognizer_name'), [])
+
+    @mock.patch('requests.get', side_effect=mocked_requests_field_types)
+    def test_can_retrieve_field_types(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        self.assertEqual(api.retrieve_field_types(), [])
