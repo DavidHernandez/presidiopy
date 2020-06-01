@@ -45,6 +45,7 @@ class PresidioPy():
         analyzeTemplate = kwargs.get('analyzeTemplate')
         if template is not None:
             data['AnalyzeTemplateId'] = template
+            data['analyzeTemplate'] = analyzeTemplate
         else:
             data['analyzeTemplate'] = analyzeTemplate if analyzeTemplate is not None else {'allFields': True}
 
