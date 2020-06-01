@@ -32,16 +32,22 @@ class PresidioPy():
     def change_project(self, project):
         self.project = project
 
+    def add_field_type(self, field, **kwargs):
+        name = field['value']['entity']
+        return self.request('post', self.recognizers_url + name, json=field, **kwargs)
+
     def analyze(self, text, **kwargs):
         data = {
             'text': text
         }
 
         template = kwargs.get('template')
+        analyzeTemplate = kwargs.get('analyzeTemplate')
         if template is not None:
             data['AnalyzeTemplateId'] = template
+            data['analyzeTemplate'] = analyzeTemplate
         else:
-            data['analyzeTemplate'] = {'allFields': True}
+            data['analyzeTemplate'] = analyzeTemplate if analyzeTemplate is not None else {'allFields': True}
 
         return self.request('post', self.analyze_url, json=data)
 

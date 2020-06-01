@@ -18,7 +18,10 @@ def mocked_requests_analyze(*args, **kwargs):
     if json is None:
         return MockResponse(None, 404)
 
-    if 'AnalyzeTemplateId' in json and json['AnalyzeTemplateId'] is 'template_id':
+    if 'AnalyzeTemplateId' in json and json['AnalyzeTemplateId'] == 'template_id':
+        return MockResponse(['ok'], 200)
+
+    elif 'analyzeTemplate' in json and 'fields' in json['analyzeTemplate']:
         return MockResponse(['ok'], 200)
 
     return MockResponse([], 200)
@@ -75,6 +78,31 @@ class TestPresidioPy(unittest.TestCase):
         api = PresidioPy(self.sample_ip, self.project)
         output = api.analyze('text', template = 'template_id')
         self.assertEqual(output, ['ok'])
+
+    @mock.patch('requests.post', side_effect=mocked_requests_analyze)
+    def test_can_request_an_analysis_with_defined_field(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        output = api.analyze('text', analyzeTemplate={"fields": [{"name": "field_name"}]})
+        self.assertEqual(output, ['ok'])
+
+    @mock.patch('requests.post', side_effect=mocked_requests_recognizers)
+    def test_can_insert_field_type(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        field = {
+            'value': {
+                'entity': 'ROCKET',
+                'language': 'en-us',
+                'patterns': [
+                    {
+                        'name': 'rocket-recognizer',
+                        'regex': '\\W*(rocket)\\W*',
+                        'score': 1,
+                    }
+                ]
+            }
+        }
+        output = api.add_field_type(field)
+        self.assertEqual(output, [])
 
     def test_can_generate_recognizers_url(self):
         api = PresidioPy(self.sample_ip, self.project)
