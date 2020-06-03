@@ -36,6 +36,9 @@ class PresidioPy():
         name = field['value']['entity']
         return self.request('post', self.recognizers_url + name, json=field, **kwargs)
 
+    def delete_field_type(self, recognizer_name):
+        return self.request('delete', self.recognizers_url + recognizer_name)
+
     def analyze(self, text, **kwargs):
         data = {
             'text': text
@@ -62,12 +65,14 @@ class PresidioPy():
         return self.request('get', url)
 
     def request(self, method, url, **kwargs):
-        if method is 'get':
+        if method == 'get':
             response = requests.get(url)
+        elif method == 'delete':
+            response = requests.delete(url)
         else:
             response = requests.post(url, **kwargs)
 
-        if response.status_code is not 200:
+        if response.status_code != 200:
             raise Exception('Error: ' + str(response.status_code))
 
         return response.json()
