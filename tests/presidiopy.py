@@ -104,6 +104,14 @@ class TestPresidioPy(unittest.TestCase):
         output = api.add_field_type(field)
         self.assertEqual(output, [])
 
+    @mock.patch('requests.delete', side_effect=mocked_requests_recognizers)
+    def test_can_delete_field_type(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        recognizer_name = 'rocket-recognizer'
+        output = api.delete_field_type(recognizer_name)
+        self.assertEqual(output, [])
+
+
     def test_can_generate_recognizers_url(self):
         api = PresidioPy(self.sample_ip, self.project)
         self.assertEqual(api.recognizers_url, 'http://127.0.0.1:8080/api/v1/analyzer/recognizers/')

@@ -37,7 +37,6 @@ class PresidioPy():
         return self.request('post', self.recognizers_url + name, json=field, **kwargs)
 
     def delete_field_type(self, recognizer_name):
-        print(self.recognizers_url + recognizer_name) 
         return self.request('delete', self.recognizers_url + recognizer_name)
 
     def analyze(self, text, **kwargs):
