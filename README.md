@@ -23,10 +23,10 @@ PresidioPY is a wrapper around requests library to interact with [Microsoft Pres
 | /api/v1/projects/:project/schedule-scanner-cronjob | POST            | NO        |
 | /api/v1/projects/:project/schedule-streams-job     | POST            | NO        |
 | /api/v1/analyzer/recognizers                       | GET             | YES       |
-| /api/v1/analyzer/recognizers/:id                   | GET             | YES       |
-| /api/v1/analyzer/recognizers/:id                   | POST            | NO        |
-| /api/v1/analyzer/recognizers/:id                   | PUT             | NO        |
-| /api/v1/analyzer/recognizers/:id                   | DELETE          | NO        |
+| /api/v1/analyzer/recognizers/:recognizer_name      | GET             | YES       |
+| /api/v1/analyzer/recognizers/:recognizer_name      | POST            | YES       |
+| /api/v1/analyzer/recognizers/:recognizer_name      | PUT             | YES       |
+| /api/v1/analyzer/recognizers/:recognizer_name      | DELETE          | YES       |
 
 ## Releasing new version
 
