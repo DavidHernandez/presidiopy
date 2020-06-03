@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="presidiopy", # Replace with your own username
+    name="presidiopy2", # Replace with your own username
     version="0.0.2",
     author="David Hernandez",
     author_email="hello@davidhernandez.info",
