@@ -4,17 +4,17 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="presidiopy2", # Replace with your own username
-    version="0.0.2",
+    name="presidiopy", # Replace with your own username
+    version="0.0.5",
     author="David Hernandez",
     author_email="hello@davidhernandez.info",
     description="An API library to interact with Microsoft Presidio",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/querylayer/presidiopy",
+    url="https://github.com/DavidHernandez/presidiopy",
     project_urls={
-        "Bug Tracker": "https://github.com/querylayer/presidiopy/issues",
-        "Source Code": "https://github.com/querylayer/presidiopy",
+        "Bug Tracker": "https://github.com/DavidHernandez/presidiopy/issues",
+        "Source Code": "https://github.com/DavidHernandez/presidiopy",
     },
     packages=setuptools.find_packages(),
     install_requires=[

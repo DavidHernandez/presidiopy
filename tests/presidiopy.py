@@ -67,6 +67,16 @@ class TestPresidioPy(unittest.TestCase):
         api.change_project('ql')
         self.assertEqual(api.analyze_url, 'http://127.0.0.1:8080/api/v1/projects/ql/analyze')
 
+    def test_can_generate_recognizers_url(self):
+        api = PresidioPy(self.sample_ip, self.project)
+        self.assertEqual(api.recognizers_url, 'http://127.0.0.1:8080/api/v1/analyzer/recognizers/')
+
+    @mock.patch('requests.get', side_effect=mocked_requests_error)
+    def test_raises_error_when_presidio_is_not_available(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        with self.assertRaises(Exception):
+            api.retrieve_recognizers()
+
     @mock.patch('requests.post', side_effect=mocked_requests_analyze)
     def test_can_request_an_analysis(self, mock):
         api = PresidioPy(self.sample_ip, self.project)
@@ -85,8 +95,23 @@ class TestPresidioPy(unittest.TestCase):
         output = api.analyze('text', analyzeTemplate={"fields": [{"name": "field_name"}]})
         self.assertEqual(output, ['ok'])
 
+    @mock.patch('requests.get', side_effect=mocked_requests_field_types)
+    def test_can_retrieve_field_types(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        self.assertEqual(api.retrieve_field_types(), [])
+
+    @mock.patch('requests.get', side_effect=mocked_requests_recognizers)
+    def test_can_get_recognizers(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        self.assertEqual(api.retrieve_recognizers(), [])
+
+    @mock.patch('requests.get', side_effect=mocked_requests_recognizers)
+    def test_can_get_recognizer(self, mock):
+        api = PresidioPy(self.sample_ip, self.project)
+        self.assertEqual(api.retrieve_recognizer_type('recognizer_name'), [])
+
     @mock.patch('requests.post', side_effect=mocked_requests_recognizers)
-    def test_can_insert_field_type(self, mock):
+    def test_can_insert_recognizer_type(self, mock):
         api = PresidioPy(self.sample_ip, self.project)
         field = {
             'value': {
@@ -101,38 +126,12 @@ class TestPresidioPy(unittest.TestCase):
                 ]
             }
         }
-        output = api.add_field_type(field)
+        output = api.add_recognizer_type('rocket-recognizer', field)
         self.assertEqual(output, [])
 
     @mock.patch('requests.delete', side_effect=mocked_requests_recognizers)
-    def test_can_delete_field_type(self, mock):
+    def test_can_delete_recognizer_type(self, mock):
         api = PresidioPy(self.sample_ip, self.project)
         recognizer_name = 'rocket-recognizer'
-        output = api.delete_field_type(recognizer_name)
+        output = api.delete_recognizer_type(recognizer_name)
         self.assertEqual(output, [])
-
-
-    def test_can_generate_recognizers_url(self):
-        api = PresidioPy(self.sample_ip, self.project)
-        self.assertEqual(api.recognizers_url, 'http://127.0.0.1:8080/api/v1/analyzer/recognizers/')
-
-    @mock.patch('requests.get', side_effect=mocked_requests_error)
-    def test_raises_error_when_presidio_is_not_available(self, mock):
-        api = PresidioPy(self.sample_ip, self.project)
-        with self.assertRaises(Exception):
-            api.retrieve_recognizers()
-
-    @mock.patch('requests.get', side_effect=mocked_requests_recognizers)
-    def test_can_get_recognizers(self, mock):
-        api = PresidioPy(self.sample_ip, self.project)
-        self.assertEqual(api.retrieve_recognizers(), [])
-
-    @mock.patch('requests.get', side_effect=mocked_requests_recognizers)
-    def test_can_get_recognizer(self, mock):
-        api = PresidioPy(self.sample_ip, self.project)
-        self.assertEqual(api.retrieve_recognizers('recognizer_name'), [])
-
-    @mock.patch('requests.get', side_effect=mocked_requests_field_types)
-    def test_can_retrieve_field_types(self, mock):
-        api = PresidioPy(self.sample_ip, self.project)
-        self.assertEqual(api.retrieve_field_types(), [])

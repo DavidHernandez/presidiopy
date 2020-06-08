@@ -25,7 +25,7 @@ PresidioPY is a wrapper around requests library to interact with [Microsoft Pres
 | /api/v1/analyzer/recognizers                       | GET             | YES       |
 | /api/v1/analyzer/recognizers/:recognizer_name      | GET             | YES       |
 | /api/v1/analyzer/recognizers/:recognizer_name      | POST            | YES       |
-| /api/v1/analyzer/recognizers/:recognizer_name      | PUT             | YES       |
+| /api/v1/analyzer/recognizers/:recognizer_name      | PUT             | NO        |
 | /api/v1/analyzer/recognizers/:recognizer_name      | DELETE          | YES       |
 
 ## Releasing new version
@@ -39,4 +39,4 @@ Check the documentation in case it is necessary: https://packaging.python.org/tu
 
 ## Development sponsor
 
-The development of this library is sponsored by [QueryLayer](https://www.querylayer.com/): The next generation of Data-Sharing.
+The development of this library was originally sponsored by [QueryLayer](https://www.querylayer.com/)

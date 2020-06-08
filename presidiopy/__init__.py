@@ -32,13 +32,6 @@ class PresidioPy():
     def change_project(self, project):
         self.project = project
 
-    def add_field_type(self, field, **kwargs):
-        name = field['value']['entity']
-        return self.request('post', self.recognizers_url + name, json=field, **kwargs)
-
-    def delete_field_type(self, recognizer_name):
-        return self.request('delete', self.recognizers_url + recognizer_name)
-
     def analyze(self, text, **kwargs):
         data = {
             'text': text
@@ -54,15 +47,24 @@ class PresidioPy():
 
         return self.request('post', self.analyze_url, json=data)
 
+    def retrieve_field_types(self):
+        url = self.field_types_url
+        return self.request('get', url)
+
     def retrieve_recognizers(self, *args):
         url = self.recognizers_url
         if len(args) > 0:
             url += str(args[0])
         return self.request('get', url)
 
-    def retrieve_field_types(self):
-        url = self.field_types_url
-        return self.request('get', url)
+    def add_recognizer_type(self, recognizer, recognizer_data, **kwargs):
+        return self.request('post', self.recognizers_url + recognizer, json=recognizer_data, **kwargs)
+
+    def delete_recognizer_type(self, recognizer):
+        return self.request('delete', self.recognizers_url + recognizer)
+
+    def retrieve_recognizer_type(self, recognizer):
+        return self.request('get', self.recognizers_url + recognizer)
 
     def request(self, method, url, **kwargs):
         if method == 'get':
